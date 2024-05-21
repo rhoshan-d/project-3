@@ -16,7 +16,7 @@ def validate_email_input(email):
     return "@" in email and email.endswith(".com")
 
 
-def sign_up(pEmail,pPassword):
+def login_user(pEmail,pPassword):
     """
     Checks if the email and password exists
     """
@@ -28,7 +28,7 @@ def sign_up(pEmail,pPassword):
             found = True
             break
     if not found:
-        print('Your account was not found , would you like to signup ?')
+        print(f'No account with the email {pEmail} exists please create a account!')
 
 
 def main():
@@ -40,7 +40,7 @@ def main():
 
     valid = validate_email_input(user_email)
     if valid and user_password != '':
-        sign_up(user_email,user_password)
+        login_user(user_email,user_password)
     else:
         print('Please provide a valid email and password !')
 
