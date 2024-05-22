@@ -68,9 +68,9 @@ def main():
     """
     Run all program functions
     """
-    option = input('1 - Login , 2 - Register: ')
+    option = input('Please select an option:\n1 - Login\n2 - Register\nYour choice: ')
     if int(option) == 1:
         attempt_login()
 
-print("Welcome To Rhoshans Login Management System Please Follow Instructions On Screen!")
+print("Welcome To Rhoshans Login Management System Please Follow Instructions On Screen!\n")
 main ()
