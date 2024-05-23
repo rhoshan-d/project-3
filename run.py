@@ -79,6 +79,37 @@ def attempt_login():
             break
 
 
+def register_user ():
+    """
+    Get inputted email and password & check email does not,
+    already exists. Validate both email and password and save
+    to the Users worksheet.
+    """
+    while True:
+        email_input = input('Enter your email address: ')
+        password_input = input('Enter your password: ')
+        if not validate_email_input(email_input): 
+            print('Email address is not valid.')
+            return False
+        elif password_input == '':
+            print('Password cannot be empty.')
+            return False
+        users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
+        all_users = users_spreadsheet_values[1:]
+
+        user_exists = False
+        for email, _ in all_users:
+            if email == email_input:
+                print('You already have an account! Please log in.')
+                user_exists = True
+                break
+        
+        if not user_exists:
+            print('Registration successful!')
+            # save new users data to the spreadsheet (todo)
+            break
+    return user_exists
+
 def handle_user_input():
     """
     Handle user input and validate it.
@@ -90,8 +121,9 @@ def handle_user_input():
                 attempt_login()
                 break
             elif int(option) == 2:
+                register_user()
                 # We will make this function soon !
-                pass
+                break
             else:
                 print(f'{option} is not a valid option.')
         except ValueError as e:
