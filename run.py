@@ -28,16 +28,26 @@ def validate_email_input(email):
         valid_domain = True
     return "@" in email and valid_domain
 
+def update_worksheet(data, worksheet):
+    """
+    Receives a list to be inserted into a worksheet
+    Update the relevant worksheet with the data provided
+    """
+    print(f"Signing you up...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"Registration successful!\n")
 
 def login_user(pEmail,pPassword):
     """
     Check and validate email inputted , checks the Users worksheet for an account,
     with the given email and password. If both match break loop and return true.
     """
+    print(f'\nAttempting to log you in...\n')
     if not validate_email_input(pEmail): 
-        return print('Email address is not valid.')
+        return print(f'Email address is not valid.\n')
     elif pPassword == '':
-        return print('Password cannot be empty.')
+        return print(f'Password cannot be empty.\n')
     users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
     new_users_account = users_spreadsheet_values[1:]
     user_status = {
@@ -56,9 +66,9 @@ def login_user(pEmail,pPassword):
                 break
 
     if not user_status['emailFound']:
-        print('Email was not found.')
+        print(f'{pEmail} was not found.\n')
     elif not user_status['passwordFound']:
-        print('Incorrect password.')
+        print(f'The password you entered is incorrect.\n')
     else:
         print('Logged in successfully.')
     
@@ -89,24 +99,23 @@ def register_user ():
         email_input = input('Enter your email address: ')
         password_input = input('Enter your password: ')
         if not validate_email_input(email_input): 
-            print('Email address is not valid.')
-            return False
+            print(f'Email address is not valid.\n')
+            continue
         elif password_input == '':
-            print('Password cannot be empty.')
-            return False
+            print(f'Password cannot be empty.\n')
+            continue
         users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
         all_users = users_spreadsheet_values[1:]
 
         user_exists = False
         for email, _ in all_users:
             if email == email_input:
-                print('You already have an account! Please log in.')
+                print(f'The email address "{email_input}" is already in use!\n')
                 user_exists = True
-                break
+                return
         
         if not user_exists:
-            print('Registration successful!')
-            # save new users data to the spreadsheet (todo)
+            update_worksheet([email_input, password_input], "Users")
             break
     return user_exists
 
