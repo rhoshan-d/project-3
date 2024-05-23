@@ -35,7 +35,9 @@ def login_user(pEmail,pPassword):
     with the given email and password. If both match break loop and return true.
     """
     if not validate_email_input(pEmail): 
-        return print('Email address is not valid !')
+        return print('Email address is not valid.')
+    elif pPassword == '':
+        return print('Password cannot be empty.')
     users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
     new_users_account = users_spreadsheet_values[1:]
     user_status = {
@@ -54,11 +56,11 @@ def login_user(pEmail,pPassword):
                 break
 
     if not user_status['emailFound']:
-        print('Email was not found..')
+        print('Email was not found.')
     elif not user_status['passwordFound']:
-        print('Password is incorrect !')
+        print('Incorrect password.')
     else:
-        print('Login success !')
+        print('Logged in successfully.')
     
     return user_status['userLoggedIn']
 
@@ -76,13 +78,30 @@ def attempt_login():
         if loggedIn:
             break
 
+
+def handle_user_input():
+    """
+    Handle user input and validate it.
+    """
+    while True:
+        try:
+            option = input('Please select an option:\n1 - Login\n2 - Register\nYour choice: ')
+            if int(option) == 1:
+                attempt_login()
+                break
+            elif int(option) == 2:
+                # We will make this function soon !
+                pass
+            else:
+                print(f'{option} is not a valid option.')
+        except ValueError as e:
+            print(f"Invalid data: {e}, (must be a NUMBER between 1 and 2)")
+
 def main():
     """
     Run all program functions
     """
-    option = input('Please select an option:\n1 - Login\n2 - Register\nYour choice: ')
-    if int(option) == 1:
-        attempt_login()
+    handle_user_input()
 
 print("Welcome To Rhoshans Login Management System Please Follow Instructions On Screen!\n")
 main ()
