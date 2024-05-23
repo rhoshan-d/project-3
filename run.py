@@ -31,17 +31,37 @@ def validate_email_input(email):
 
 def login_user(pEmail,pPassword):
     """
-    Checks the Users worksheet for an account with the given email and password.
+    Check and validate email inputted , checks the Users worksheet for an account,
+    with the given email and password. If both match break loop and return true.
     """
-    all_user_accounts = SHEET.worksheet("Users").get_all_values()
-    found = False
-    for emails , passwords in all_user_accounts:
-        if pEmail == emails and pPassword == passwords:
-            print(f'Logged in successfully , welcome {pEmail}')
-            found = True
-            break
-    if not found:
-        print(f'No account with the email {pEmail} exists, would you like to continue?')
+    if not validate_email_input(pEmail): 
+        return print('Email address is not valid !')
+    users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
+    new_users_account = users_spreadsheet_values[1:]
+    user_status = {
+        "loggedIn": False,
+        "emailFound": False,
+        "passwordFound": False,
+        "userLoggedIn": False
+    }
+    [str(value) for value in new_users_account]
+    for email , password in new_users_account:
+        if pEmail == email:
+            user_status['emailFound'] = True
+            if pPassword == password:
+                user_status['passwordFound'] = True
+                user_status['userLoggedIn'] = True
+                break
+
+    if not user_status['emailFound']:
+        print('Email was not found..')
+    elif not user_status['passwordFound']:
+        print('Password is incorrect !')
+    else:
+        print('Login success !')
+    
+    return user_status['userLoggedIn']
+
 
 
 def attempt_login():
@@ -52,17 +72,9 @@ def attempt_login():
     while True:
         user_email = input('Enter Email: ')
         user_password = input('Enter Password: ')
-
-        email_valid = validate_email_input(user_email)
-        password_valid = user_password != ''
-        if not email_valid and not password_valid:
-            print('Please provide a valid email and password.')
-        elif not password_valid:
-            print('Please provide a valid password.')
-        elif not email_valid:
-            print('Please provide a valid email.')
-        else:
-            login_user(user_email,user_password)
+        loggedIn = login_user(user_email,user_password)
+        if loggedIn:
+            break
 
 def main():
     """
