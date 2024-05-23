@@ -72,8 +72,8 @@ def attempt_login():
     given the inputted email & password
     """
     while True:
-        user_email = input('Enter Email: ')
-        user_password = input('Enter Password: ')
+        user_email = input('Please provide your email: ')
+        user_password = input('Please enter your password: ')
         loggedIn = login_user(user_email,user_password)
         if loggedIn:
             break
