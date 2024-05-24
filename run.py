@@ -82,8 +82,8 @@ def attempt_login():
     given the inputted email & password
     """
     while True:
-        user_email = input('Please provide your email: ')
-        user_password = input('Please enter your password: ')
+        user_email = input('Please provide your email:\n')
+        user_password = input('Please enter your password:\n')
         loggedIn = login_user(user_email,user_password)
         if loggedIn:
             break
@@ -96,8 +96,8 @@ def register_user ():
     to the Users worksheet.
     """
     while True:
-        email_input = input('Enter your email address: ')
-        password_input = input('Enter your password: ')
+        email_input = input('Enter your email address:\n')
+        password_input = input('Enter your password:\n')
         if not validate_email_input(email_input): 
             print(f'Email address is not valid.\n')
             continue
@@ -125,13 +125,12 @@ def handle_user_input():
     """
     while True:
         try:
-            option = input('Please select an option:\n1 - Login\n2 - Register\nYour choice: ')
+            option = input('Please select an option:\n1 - Login\n2 - Register\nYour choice:\n')
             if int(option) == 1:
                 attempt_login()
                 break
             elif int(option) == 2:
                 register_user()
-                # We will make this function soon !
                 break
             else:
                 print(f'{option} is not a valid option.')
