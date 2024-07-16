@@ -83,6 +83,7 @@ def login_user(pEmail, pPassword):
         return {"status": False, "message": "The password you entered is incorrect.\n"}
     return {"status": True, "message": "Logged in successfully."}
 
+
 def attempt_login():
     """
     Attempt to log the user in by prompting for email and password inputs.
@@ -94,6 +95,10 @@ def attempt_login():
         print(result['message'])
         if result["status"]:
             break
+        else:
+            choice = input("Would you like to continue? (Y/N)\n")
+            if choice.lower() != 'y':
+                break
 
 
 def register_user():
@@ -118,11 +123,14 @@ def register_user():
             if email == email_input:
                 print(f'Email address "{email_input}" is already in use!\n')
                 user_exists = True
-                return
+                break
         if not user_exists:
             update_worksheet([email_input, password_input], "Users")
             break
-    return user_exists
+        else:
+            choice = input("Would you like to continue? (Y/N)\n")
+            if choice.lower() != 'y':
+                break
 
 
 def handle_user_input():
@@ -131,17 +139,18 @@ def handle_user_input():
     """
     while True:
         try:
-            option = input("1 - Login\n2 - Register\nYour choice:\n")
-            if int(option) == 1:
+            option = input("1 - Login\n2 - Register\n3 - Exit\nYour choice:\n")
+            if option == '1':
                 attempt_login()
-                break
-            elif int(option) == 2:
+            elif option == '2':
                 register_user()
+            elif option == '3':
+                print("Exiting application goodbye!")
                 break
             else:
                 print(f"{option} is not a valid option.")
         except ValueError as e:
-            print(f"Invalid data: {e}, (must be a NUMBER between 1 and 2)")
+            print(f"Invalid data: {e}, (must be a NUMBER between 1 and 3)")
 
 
 def main():
