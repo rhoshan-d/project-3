@@ -50,17 +50,17 @@ def login_user(pEmail, pPassword):
     Attempt to log in a user with the provided email and password.
 
     Args:
-        email (str): User's email address.
-        password (str): User's password.
+        pEmail (str): User's email address.
+        pPassword (str): User's password.
 
     Returns:
-        bool: True if login is successful, False otherwise.
+        dict: A dictionary with the user's login status.
     """
     print(f"\nAttempting to log you in...\n")
     if not validate_email_input(pEmail):
-        return print("Email address is not valid.\n")
+        return {"status": False, "message": "Email address is not valid.\n"}
     elif pPassword == "":
-        return print("Password cannot be empty.\n")
+        return {"status": False, "message": "Password cannot be empty.\n"}
     users_spreadsheet_values = SHEET.worksheet("Users").get_all_values()
     new_users_account = users_spreadsheet_values[1:]
     user_status = {
@@ -78,13 +78,10 @@ def login_user(pEmail, pPassword):
                 user_status["userLoggedIn"] = True
                 break
     if not user_status["emailFound"]:
-        print(f"{pEmail} was not found.\n")
+        return {"status": False, "message": f"{pEmail} was not found.\n"}
     elif not user_status["passwordFound"]:
-        print("The password you entered is incorrect.\n")
-    else:
-        print("Logged in successfully.")
-    return user_status["userLoggedIn"]
-
+        return {"status": False, "message": "The password you entered is incorrect.\n"}
+    return {"status": True, "message": "Logged in successfully."}
 
 def attempt_login():
     """
@@ -93,8 +90,8 @@ def attempt_login():
     while True:
         user_email = input("Please provide your email:\n")
         user_password = input("Please enter your password:\n")
-        loggedIn = login_user(user_email, user_password)
-        if loggedIn:
+        result = login_user(user_email, user_password)
+        if result["status"]:
             break
 
 
