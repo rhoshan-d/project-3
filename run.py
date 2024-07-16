@@ -91,6 +91,7 @@ def attempt_login():
         user_email = input("Please provide your email:\n")
         user_password = input("Please enter your password:\n")
         result = login_user(user_email, user_password)
+        print(result['message'])
         if result["status"]:
             break
 
