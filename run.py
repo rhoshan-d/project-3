@@ -15,8 +15,13 @@ SHEET = GSPREAD_CLIENT.open("project-3")
 
 def validate_email_input(email):
     """
-    Check email address by checking if it contains an @ symbol,
-    and ends with one of the allowed domains
+    Check if the provided email address is valid.
+
+    Args:
+        email (str): The email address to be validated.
+
+    Returns:
+        bool: True if the email is valid, False otherwise.
     """
     domains_allowed = [".com", ".net", ".ie"]
     valid_domain = False
@@ -28,8 +33,11 @@ def validate_email_input(email):
 
 def update_worksheet(data, worksheet):
     """
-    Receives a list to be inserted into a worksheet
-    Update the relevant worksheet with the data provided
+    Update the specified worksheet in the Google Sheets document.
+
+    Args:
+        data (list): List of data to be inserted into the worksheet.
+        worksheet (str): Name of the worksheet to update.
     """
     print(f"Signing you up...\n")
     worksheet_to_update = SHEET.worksheet(worksheet)
@@ -39,10 +47,14 @@ def update_worksheet(data, worksheet):
 
 def login_user(pEmail, pPassword):
     """
-    Check and validate email inputted,
-    checks the Users worksheet for an account,
-    with the given email and password.
-    If both match break loop and return true.
+    Attempt to log in a user with the provided email and password.
+
+    Args:
+        email (str): User's email address.
+        password (str): User's password.
+
+    Returns:
+        bool: True if login is successful, False otherwise.
     """
     print(f"\nAttempting to log you in...\n")
     if not validate_email_input(pEmail):
@@ -76,8 +88,7 @@ def login_user(pEmail, pPassword):
 
 def attempt_login():
     """
-    Validate and attempt to log the user in,
-    given the inputted email & password
+    Attempt to log the user in by prompting for email and password inputs.
     """
     while True:
         user_email = input("Please provide your email:\n")
@@ -89,9 +100,8 @@ def attempt_login():
 
 def register_user():
     """
-    Get inputted email and password & check email does not,
-    already exists. Validate both email and password and save
-    to the Users worksheet.
+    Register a new user by prompting for email and password inputs,
+    and validating that the email does not already exist in the Users worksheet.
     """
     while True:
         email_input = input("Enter your email address:\n")
@@ -119,7 +129,7 @@ def register_user():
 
 def handle_user_input():
     """
-    Handle user input and validate it.
+    Handle user input to either login or register based on user's choice.
     """
     while True:
         try:
