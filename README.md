@@ -1,10 +1,68 @@
 # Rhoshan's Login Management System
 
-This is my third project Rhoshan's Login Management System. It is an application developed to aid in user authentication using Google Sheets. This system is all about creation, validation, and management of user accounts. It ensures security yet a simple procedure for logging in. The main interface is the terminal.
-
-This project includes an overview of the current users, offering the possibility of logging in and registering. Also, this interface is user-friendly to ensure easy navigation and operation.
+This is Rhoshan's Login Management System, my third project. It aims to mimic the user registration and signup processes you'd typically find on a webpage, but it's all done through a simple terminal interface for easy use. Originally, I planned to add more features like an admin interface for managing accounts, including options for deleting accounts, resetting passwords securely, and adding more authentication methods. However, I didn't get around to adding those yet. Thanks for checking it out!
 
 <img src="readme-images/start-screen.png" alt="start view of the application">
+
+## Project Goals
+- *Secure User Authentication*: Ensure the user enters a valid email and password to access their account.
+- *Efficient User Management*: Provide a system for adding, validating, and managing user accounts using Google Sheets.
+- *User-Friendly Interface*: Develop a terminal based interface that is easy to navigate and operate.
+- *Data Integrity*: Make sure user data is accurately stored and retrieved from Google Sheets.
+
+## Setup
+
+### Google API Credentials (`creds.json`)
+
+To use this application, you need to set up Google API credentials (`creds.json`) for authentication with Google Sheets. Here's how you can obtain and configure these credentials:
+
+1. **Create a Google Cloud Project**:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Create a new project or select an existing one.
+
+2. **Enable Google Sheets API**:
+   - In the Cloud Console, navigate to **APIs & Services > Dashboard**.
+   - Click on **Enable APIs and Services**.
+   - Search for "Google Sheets API" and enable it for your project.
+
+3. **Create Service Account**:
+   - In the Cloud Console, navigate to **IAM & Admin > Service Accounts**.
+   - Click on **+ Create Service Account**.
+   - Enter a name and description for the service account, then click **Create**.
+   - Assign the "Editor" role (or appropriate permissions) to the service account.
+
+4. **Generate Credentials (`creds.json`)**:
+   - After creating the service account, click on **Generate Key**.
+   - Select JSON as the key type and click **Create**.
+   - This will download a JSON file (`creds.json`) containing your credentials. 
+
+5. **Store `creds.json` Safely**:
+   - Place the downloaded `creds.json` file in the root directory of your project.
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/rhoshan-d/rhoshans-login-system.git
+   cd rhoshans-login-system
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Usage
+
+- Run the application:
+
+  ```bash
+  python main.py
+  ```
+
+- Follow the on-screen prompts to either log in or register.
 
 ## Features
 
@@ -95,7 +153,12 @@ Setting up your repository in GitHub :
 - Python librariers including gspread
 - Git for version control
 - GitHub for storing code
- - Heroku for Deploying
+- Heroku for Deploying
+
+## Rationale for Using Specific Libraries
+
+### gspread
+- *Why I used it*: I am using gspread to work with Google Sheets because it's a simple way to store the users information in the cloud. It helps connect to Google Sheets easily and manage user data effectively. The inspiration to use gspread was from the Love Sandwiches project as it seemed like a perfect fit.
 
 ## Improvements and ideas for future projects
 
@@ -108,7 +171,7 @@ Setting up your repository in GitHub :
 ## Credits
 
 ### Content
-This README's structure and content were created by myself with the help and guidance of Google, Youtube and some AI.
+This README's structure and content were created by myself with the help and guidance of Google, Youtube and some AI (AI really helps me word things better :D).
 ### Code
 
 | No | Description | Source | URL |
